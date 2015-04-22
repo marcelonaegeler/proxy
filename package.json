@@ -1,0 +1,19 @@
+{
+  "name": "proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.8.4",
+    "express": "~4.9.0",
+    "http-proxy": "^1.10.1",
+    "mongoose": "*",
+    "swig": "^1.4.2",
+    "swig-extras": "0.0.1"
+  }
+}

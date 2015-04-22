@@ -1,0 +1,33 @@
+#! /usr/bin/node
+var httpProxy = require('http-proxy')
+	, http = require('http')
+	, fs = require('fs')
+	, mongoose = require('mongoose')
+	;
+
+var connectionData = 'mongodb://localhost:27017/sou'
+    , mongooseOptions = { server: { poolSize: 5 } };
+mongoose.connect(connectionData, mongooseOptions);
+mongoose.connection.on('connected', function () {  
+    console.log('Mongoose connected');
+});
+
+var proxy = httpProxy.createProxyServer({});
+
+var server = http.createServer(function(req, res) {
+	var host = req.headers.host;
+	if(host == 'node') 
+		proxy.web(req, res, { target: 'http://localhost:3000' });
+	else if(host == 'apache')
+		proxy.web(req, res, { target: 'http://localhost:8080' });
+	else {	
+		fs.readFile('index.html', function(err, html) {
+			res.writeHead(200, { 'Content-Type': 'text/html', 'Trailer': 'Content-MD5' });
+			res.write(html);
+			res.end();
+		});
+	}
+});
+
+console.log('Listening at :80');
+server.listen(80);

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Proxy server</title>
+</head>
+<body>
+	<h1>Proxy server do Celããão</h1>
+
+	{% if links[0] %}
+		<h3>Links disponíveis:</h3>
+		<ol>
+			{% for link in links %}
+				<li><a href="http://{{link.domain}}">{{link.domain}}</a> <a href="/delete-domain?id={{link._id.toString()}}">Excluir</a></li>
+			{% endfor %}
+		</ol>
+	{% endif %}
+
+	<form action="/new-domain" method="POST">
+		<div>
+			<label>
+				Domínio:
+				<input type="text" name="domain" placeholder="Domínio">
+			</label>
+		</div>
+		<div>
+			<label>
+				É uma aplicação node.js? Se sim, insira a porta:
+				<input type="text" name="port" placeholder="Porta da aplicação">
+			</label>
+		</div>
+		<div>
+			<button type="submit">Salvar</button>
+		</div>
+	</form>
+</body>
+</html>
